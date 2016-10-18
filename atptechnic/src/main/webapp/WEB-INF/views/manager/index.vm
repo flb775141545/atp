@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Blue Moon - Responsive Admin Dashboard</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <meta name="description" content="Blue Moon - Responsive Admin Dashboard" />
+    <meta name="keywords" content="Notifications, Admin, Dashboard, Bootstrap3, Sass, transform, CSS3, HTML5, Web design, UI Design, Responsive Dashboard, Responsive Admin, Admin Theme, Best Admin UI, Bootstrap Theme, Wrapbootstrap, Bootstrap, bootstrap.gallery" />
+    <meta name="author" content="Bootstrap Gallery" />
+    <link rel="shortcut icon" href="/skin/manager/img/favicon.ico">
+    
+    <link href="/skin/manager/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/skin/manager/css/new.css" rel="stylesheet"> 
+    <link href="/skin/manager/css/charts-graphs.css" rel="stylesheet">
+    <!-- Datepicker CSS -->
+    <link rel="stylesheet" type="text/css" href="/skin/manager/css/datepicker.css">
+
+    <link href="/skin/manager/fonts/font-awesome.min.css" rel="stylesheet">
+
+    <!-- HTML5 shiv and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+      <script src="js/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <!-- Header Start -->
+    #parse("/manager/header.vm")
+    <!-- Header End -->
+
+    <!-- Main Container start -->
+    <div class="dashboard-container">
+
+      <div class="container">
+        <!-- Top Nav Start -->
+        #parse("/manager/menu.vm")
+        <!-- Top Nav End -->
+
+        <!-- Sub Nav End -->
+        <div class="sub-nav hidden-sm hidden-xs">
+          <ul>
+            <li><a href="" class="heading">Dashboard</a></li>
+            <li class="hidden-sm hidden-xs">
+              <a href="index2.html" class="">Dashboard V1</a>
+            </li>
+            <li class="hidden-sm hidden-xs">
+              <a href="index.html" class="selected">Dashboard V2</a>
+            </li>
+          </ul>
+          <div class="custom-search hidden-sm hidden-xs">
+            <input type="text" class="search-query" placeholder="Search here ...">
+            <i class="fa fa-search"></i>
+          </div>
+        </div>
+        <!-- Sub Nav End -->
+
+        <!-- Dashboard Wrapper Start -->
+        <div class="dashboard-wrapper-lg">
+          <!-- Left Sidebar Start -->
+		  <div class="left-sidebar">
+			<div class="row">
+              <div class="col-lg-12 col-md-12">
+                <div class="widget no-margin">
+					<div class="widget-header">
+                        <div class="title">
+                          Icons<span class="mini-title">Font Awesome Icons</span>
+                        </div>
+                        <span class="tools">
+                          <i class="fa fa-cogs"></i>
+                        </span>
+					</div>
+                </div>
+              </div>
+            </div>
+          </div>
+		  <!-- Left Sidebar End -->
+		  
+          <!-- Right Sidebar Start -->
+          #parse("/manager/right.vm")
+          <!-- Right Sidebar End -->
+
+        </div>
+        <!-- Dashboard Wrapper End -->
+
+        <footer>
+          <p>© BlueMoon 2013-15</p>
+        </footer>
+
+      </div>
+    </div>
+    <!-- Main Container end -->
+
+    <script src="/skin/manager/js/jquery.js"></script>
+    <script src="/skin/manager/js/bootstrap.min.js"></script>
+    <script src="/skin/manager/js/jquery.scrollUp.js"></script>
+    
+    <!-- jQuery UI JS -->
+    <script src="/skin/manager/js/jquery-ui-v1.10.3.js"></script>
+
+    <!-- Just Gage -->
+    <script src="/skin/manager/js/justgage/justgage.js"></script>
+    <script src="/skin/manager/js/justgage/raphael.2.1.0.min.js"></script>
+
+    <!-- Flot Charts -->
+    <script src="/skin/manager/js/flot/jquery.flot.js"></script>
+    <script src="/skin/manager/js/flot/jquery.flot.orderBar.min.js"></script>
+    <script src="/skin/manager/js/flot/jquery.flot.stack.min.js"></script>
+    <script src="/skin/manager/js/flot/jquery.flot.pie.min.js"></script>
+    <script src="/skin/manager/js/flot/jquery.flot.tooltip.min.js"></script>
+    <script src="/skin/manager/js/flot/jquery.flot.resize.min.js"></script>
+
+    <!-- Custom JS -->
+    <script src="/skin/manager/js/menu.js"></script>
+    <script src="/skin/manager/js/custom-index2.js"></script>
+    
+    <script type="text/javascript">
+      //ScrollUp
+      $(function () {
+        jQuery.scrollUp({
+          scrollName: 'scrollUp', // Element ID
+          topDistance: '300', // Distance from top before showing element (px)
+          topSpeed: 300, // Speed back to top (ms)
+          animation: 'fade', // Fade, slide, none
+          animationInSpeed: 400, // Animation in speed (ms)
+          animationOutSpeed: 400, // Animation out speed (ms)
+          scrollText: 'Top', // Text for element
+          activeOverlay: false, // Set CSS color to display scrollUp active point, e.g '#00FFFF'
+        });
+      });
+    </script>
+
+  </body>
+</html>

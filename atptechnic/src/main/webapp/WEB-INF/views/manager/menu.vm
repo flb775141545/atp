@@ -1,0 +1,37 @@
+<div id='cssmenu'>
+	<ul>
+		<li class='active'>
+			<a href='/atptechnic/manager/index.htm'>
+				<i class="fa fa-dashboard"></i>
+				首页
+			</a>
+		</li>
+		<li>
+			<a href="/atptechnic/manager/admin/page.htm">
+				<i class="fa fa-sitemap"></i>
+				用户管理
+			</a>
+		</li>
+		<li class=''>
+			<a href='#'><i class="fa fa-qrcode"></i>产品管理</a>
+			<ul>
+				<li><a href='flot.html'>产品分类</a></li>
+				<li><a href='/atptechnic/manager/product/page.htm'>产品列表</a></li>
+			</ul>
+		</li>
+		<li class=''>
+			<a href='/atptechnic/manager/member/page.htm'><i class="fa fa-user-md"></i>会员管理</a>
+		</li>
+		<li class=''>
+			<a href='/atptechnic/manager/message/page.htm'><i class="fa fa-envelope-o"></i>客户来信管理</a>
+		</li>
+		<li class=''>
+			<a href='#'><i class="fa fa-user"></i>个人中心</a>
+			<ul>
+				<li><a href='/atptechnic/manager/admin/$!{context.adminId}/detail.htm'>个人资料</a></li>
+				<li><a href='#'>密码修改</a></li>
+				<li><a href='#'>写博客</a></li>
+			</ul>
+		</li>
+	</ul>
+</div>

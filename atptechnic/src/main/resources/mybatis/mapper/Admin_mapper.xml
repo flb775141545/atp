@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://code.mysteeltech.com/schema/mybatis/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.flb.atptechnic.dao.AdminDao">
+	<sql id="tab_admin"> atp_admin </sql>
+	
+	<insert id="insert" parameterType="admin" keyProperty="id" useGeneratedKeys="true">
+		insert into <include refid="tab_admin"/> 
+		(
+				username,
+				password,
+				name,
+				pinyin,
+				sex,
+				phone,
+				fax,
+				mobile,
+				email,
+				qq,
+				address,
+				photoURL
+		)
+		VALUES 
+		(
+				#{username},
+				#{password},
+				#{name},
+				#{pinyin},
+				#{sex},
+				#{phone},
+				#{fax},
+				#{mobile},
+				#{email},
+				#{qq},
+				#{address},
+				#{photourl}
+		)
+	</insert>
+	
+	<update id="update" parameterType="admin">
+		update <include refid="tab_admin"/>
+		<set>
+				username = #{username},
+				password = #{password},
+				name = #{name},
+				pinyin = #{pinyin},
+				sex = #{sex},
+				phone = #{phone},
+				fax = #{fax},
+				mobile = #{mobile},
+				email = #{email},
+				qq = #{qq},
+				address = #{address},
+				photoURL = #{photourl}
+		</set>
+		<where>
+			id = #{id}
+		</where>
+	</update>
+	
+	<select id="findById" parameterType="long" resultType="admin">
+    	select * from <include refid="tab_admin"/> where id = #{id}
+  	</select>
+  	
+	<sql id="condition_sql">
+			<if test="username != null"> AND username = #{username} </if>
+			<if test="password != null"> AND password = #{password} </if>
+			<if test="name != null"> AND name = #{name} </if>
+			<if test="pinyin != null"> AND pinyin = #{pinyin} </if>
+			<if test="sex != null"> AND sex = #{sex} </if>
+			<if test="phone != null"> AND phone = #{phone} </if>
+			<if test="fax != null"> AND fax = #{fax} </if>
+			<if test="mobile != null"> AND mobile = #{mobile} </if>
+			<if test="email != null"> AND email = #{email} </if>
+			<if test="qq != null"> AND qq = #{qq} </if>
+			<if test="address != null"> AND address = #{address} </if>
+			<if test="photourl != null"> AND photoURL = #{photourl} </if>
+	</sql>
+	
+	<select id="query" parameterType="java.util.Map" resultType="admin">
+		select * from  
+		<include refid="tab_admin"/>
+		
+		<where>
+			<include refid="condition_sql" />
+		</where>
+		ORDER BY id DESC
+		<if test="start != null and count != null">
+			LIMIT #{start}, #{count} 
+		</if>
+	</select>
+	
+
+	<select id="count" parameterType="java.util.Map" resultType="int">
+		select count(1) from <include refid="tab_admin"/>
+		<where>
+			<include refid="condition_sql"/>
+		</where>
+	</select>
+	
+	<delete id="deleteById" parameterType="long">
+    	delete from <include refid="tab_admin"/> where id = #{id}
+  	</delete>
+	
+</mapper>

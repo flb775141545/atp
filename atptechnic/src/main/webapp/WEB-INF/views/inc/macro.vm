@@ -1,0 +1,158 @@
+#macro(invoke $page)
+    #if($page.startsWith("/"))
+        #parse($page)
+    #else
+        #set($uri = $request.getAttribute("javax.servlet.include.request_uri"))
+        #if(!$uri)#set($uri = $request.getServletPath())#end
+        #set($path = $uri.substring(0, $uri.lastIndexOf("/")))
+        #parse("$path/$page")
+    #end
+#end
+
+<!--分页-->
+#macro(pageNation $data $colspan $url $queryString)
+    #if(!$!{data})
+		<div style="height:40px; line-height:40px; text-align:center; font-size:14px;" class="row DTTTFooter no-padding">
+    		<strong>没有数据</strong>
+         </div>
+    #else
+        <div class="col-sm-12">
+            <div class="dataTables_paginate paging_bootstrap" id="simpledatatable_paginate">
+                #set($next = $data.currentPage + 1)
+                #set($pre = $data.currentPage - 1)
+                #if($data.currentPage < 3)
+                    <ul class="pagination">
+                        #if($data.currentPage == 1)
+                            <li><a href="javascript:void(0)" class="disabled">上一页</a></li>
+                        #else
+                            <li><a href="${url}?page=1&$!{queryString}" class="disabled">上一页</a></li>
+                        #end
+
+                        #set($_end = $data.pageCount)
+                        #if($data.pageCount > 5)
+                            #set($_end = 5)
+                        #end
+                        #foreach($index in [1..$_end])
+                            #if($index == $data.currentPage)
+                                <li class="active"><a href="javascript:void(0)">${index}</a></li>
+                            #else
+                                <li><a href="${url}?page=${index}&$!{queryString}">${index}</a></li>
+                            #end
+
+                        #end
+                        #if($data.pageCount > 5)
+                            <li><a href="${url}?page=$!{data.pageCount}&$!{queryString}">...</a></li>
+                        #end
+                        #if($data.currentPage == $data.pageCount)
+                            <li><a href="javascript:void(0)">下一页</a></li>
+                        #else
+                            <li><a href="${url}?page=${next}&$!{queryString}">下一页</a></li>
+						#end
+						
+						<li class="margin-left-10 margin-right-10 span32">共 $data.totalCount 条</li>
+                    </ul>
+                #elseif($data.currentPage == $data.pageCount)
+                    <ul class="pagination">
+                        <li><a href="${url}?page=${pre}&$!{queryString}">上一页</a></li>
+
+                        #set($_start = 1)
+                        #if($data.pageCount > 5)
+                            #set($_start = $data.pageCount - 4)
+                        #end
+                        #if($data.pageCount > 5)
+                            <li><a href="${url}?page=1&$!{queryString}">...</a></li>
+                        #end
+
+                        #foreach($index in [$_start..$data.currentPage])
+                            #if($index == $data.currentPage)
+                                <li class="active"><a href="javascript:void(0)">${index}</a></li>
+                            #else
+                                <li><a href="${url}?page=${index}&$!{queryString}">${index}</a></li>
+                            #end
+
+                        #end
+
+                        <li><a href="javascript:void(0)">下一页</a></li>
+						<li class="margin-left-10 margin-right-10 span32">共 $data.totalCount 条</li>
+                    </ul>
+                #else
+                    <ul class="pagination">
+                        <li><a href="${url}?page=${pre}&$!{queryString}">上一页</a></li>
+
+                        #set($_start = 1)
+                        #set($_end = $data.pageCount)
+
+                        #if($data.currentPage > 3)
+                            <li><a href="${url}?page=1&$!{queryString}">...</a></li>
+                            #set($_start = $data.currentPage - 2)
+                        #end
+                        #if($data.currentPage + 2 < $data.pageCount)
+                            #set($_end = $data.currentPage + 2)
+                        #end
+
+                        #foreach($index in [$_start..$_end])
+                            #if($index == $data.currentPage)
+                                <li class="active"><a href="javascript:void(0)">${index}</a></li>
+                            #else
+                                <li><a href="${url}?page=${index}&$!{queryString}">${index}</a></li>
+                            #end
+
+                        #end
+                        #if($data.currentPage + 2 < $data.pageCount)
+                            #set($dash = $data.currentPage + 3)
+                            <li><a href="${url}?page=${data.pageCount}&$!{queryString}">...</a></li>
+                        #end
+                        <li><a href="${url}?page=${next}&$!{queryString}">下一页</a></li>
+						<li class="margin-left-10 margin-right-10 span32">共 $data.totalCount 条</li>
+                    </ul>
+                #end
+            </div>
+        </div>
+    #end
+#end
+
+<!--会员中心分页-->
+#macro(memberPageNation $data $colspan $url)
+	<div class="page"> 
+    	#if(!$!{data} || $data.recordList.size() == 0)
+		#else
+			#if(${data.currentPage}>1)
+				<a href="javascript:goPage(1);">首页</a>
+			#end
+			#set($prevPage = ${data.currentPage} - 1)
+			#set($nextnPage = ${data.currentPage} + 1)
+			#if(${data.currentPage} == 1)
+				#set($prevPage = 1)
+			#end
+			#if(${data.currentPage} == ${data.pageCount})
+				#set($nextnPage = ${data.pageCount})
+			#end
+				<a href="javascript:goPage($prevPage);" class="gray1">&lt;</a>
+			#set($offsetStart=1)
+			#set($offsetEnd=${data.pageCount})
+			#if($offsetEnd > 5)
+				#if($offsetEnd - ${data.currentPage} >= 2)
+					#set($offsetEnd = ${data.currentPage} + 2)
+				#end
+				#set($offsetStart = $offsetEnd - 4)
+				#if($offsetStart < 1)
+					#set($offsetStart = 1)
+					#set($offsetEnd = 5)
+				#end
+			#end
+			
+			#foreach($foo in [$!offsetStart..$offsetEnd])
+				<a href="javascript:goPage($foo);" #if($foo==${data.currentPage})class="cur"#end>$foo</a>
+            #end
+				<a href="javascript:goPage($nextnPage);">&gt;</a>
+			#if(${data.currentPage}<${data.pageCount})
+				<a href="javascript:goPage(${data.pageCount});">尾页</a>
+			#end
+    			共${data.pageCount}页,到第
+            <input id="pageNation_pageNum" class="number" type="text" value="">
+    			页
+			<input class="go" type="button" onclick="var pageNum=$('#pageNation_pageNum').val();goPage(pageNum)" value="确定">	
+		#end
+     </div>
+#end
+

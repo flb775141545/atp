@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://code.mysteeltech.com/schema/mybatis/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.flb.atptechnic.dao.MessageDao">
+	<sql id="tab_message"> atp_message </sql>
+	
+	<insert id="insert" parameterType="message" keyProperty="id" useGeneratedKeys="true">
+		insert into <include refid="tab_message"/> 
+		(
+				contract,
+				contract_number,
+				message
+		)
+		VALUES 
+		(
+				#{contract},
+				#{contractNumber},
+				#{message}
+		)
+	</insert>
+	
+	<update id="update" parameterType="message">
+		update <include refid="tab_message"/>
+		<set>
+				contract = #{contract},
+				contract_number = #{contractNumber},
+				message = #{message}
+		</set>
+		<where>
+			id = #{id}
+		</where>
+	</update>
+	
+	<select id="findById" parameterType="long" resultType="message">
+    	select * from <include refid="tab_message"/> where id = #{id}
+  	</select>
+  	
+	<sql id="condition_sql">
+			<if test="contract != null"> AND contract = #{contract} </if>
+			<if test="contractNumber != null"> AND contract_number = #{contractNumber} </if>
+			<if test="message != null"> AND message = #{message} </if>
+	</sql>
+	
+	<select id="query" parameterType="java.util.Map" resultType="message">
+		select * from  
+		<include refid="tab_message"/>
+		
+		<where>
+			<include refid="condition_sql" />
+		</where>
+		ORDER BY id DESC
+		<if test="start != null and count != null">
+			LIMIT #{start}, #{count} 
+		</if>
+	</select>
+	
+
+	<select id="count" parameterType="java.util.Map" resultType="int">
+		select count(1) from <include refid="tab_message"/>
+		<where>
+			<include refid="condition_sql"/>
+		</where>
+	</select>
+	
+	<delete id="deleteById" parameterType="long">
+    	delete from <include refid="tab_message"/> where id = #{id}
+  	</delete>
+	
+</mapper>

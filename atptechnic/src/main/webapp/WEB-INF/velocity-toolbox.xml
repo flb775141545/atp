@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<toolbox>
+
+	<!-- <tool>
+		<key>velocityTool</key>
+		<scope>application</scope>
+		<class>com.banksteel.process.inventory.utils.velocity.VelocityTool</class>
+	</tool> -->
+
+	<!-- <tool>
+		<key>pageTool</key>
+		<scope>application</scope>
+		<class>com.banksteel.process.inventory.utils.velocity.PageTool</class>
+	</tool> -->
+
+	<!-- <tool>
+		<key>dateTool</key>
+		<scope>application</scope>
+		<class>com.banksteel.process.utils.velocity.DateTool</class>
+	</tool> -->
+	<!-- 
+	<tool>
+		<key>moneyUtil</key>
+		<scope>application</scope>
+		<class>com.banksteel.process.inventory.utils.MoneyCalculateUtils</class>
+	</tool> -->
+	
+</toolbox>

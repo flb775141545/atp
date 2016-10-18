@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://code.mysteeltech.com/schema/mybatis/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.flb.atptechnic.dao.ProductDao">
+	<sql id="tab_product"> atp_product </sql>
+	
+	<insert id="insert" parameterType="product" keyProperty="id" useGeneratedKeys="true">
+		insert into <include refid="tab_product"/> 
+		(
+				code,
+				name,
+				title,
+				category_id,
+				price
+		)
+		VALUES 
+		(
+				#{code},
+				#{name},
+				#{title},
+				#{categoryId},
+				#{price}
+		)
+	</insert>
+	
+	<update id="update" parameterType="product">
+		update <include refid="tab_product"/>
+		<set>
+				code = #{code},
+				name = #{name},
+				title = #{title},
+				category_id = #{categoryId},
+				price = #{price}
+		</set>
+		<where>
+			id = #{id}
+		</where>
+	</update>
+	
+	<select id="findById" parameterType="long" resultType="product">
+    	select * from <include refid="tab_product"/> where id = #{id}
+  	</select>
+  	
+	<sql id="condition_sql">
+			<if test="code != null"> AND code = #{code} </if>
+			<if test="name != null"> AND name = #{name} </if>
+			<if test="title != null"> AND title = #{title} </if>
+			<if test="categoryId != null"> AND category_id = #{categoryId} </if>
+			<if test="price != null"> AND price = #{price} </if>
+	</sql>
+	
+	<select id="query" parameterType="java.util.Map" resultType="product">
+		select * from  
+		<include refid="tab_product"/>
+		
+		<where>
+			<include refid="condition_sql" />
+		</where>
+		ORDER BY id DESC
+		<if test="start != null and count != null">
+			LIMIT #{start}, #{count} 
+		</if>
+	</select>
+	
+
+	<select id="count" parameterType="java.util.Map" resultType="int">
+		select count(1) from <include refid="tab_product"/>
+		<where>
+			<include refid="condition_sql"/>
+		</where>
+	</select>
+	
+	<delete id="deleteById" parameterType="long">
+    	delete from <include refid="tab_product"/> where id = #{id}
+  	</delete>
+	
+</mapper>

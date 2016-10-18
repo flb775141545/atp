@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc 
+		 http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		 http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context.xsd
+         http://www.springframework.org/schema/tx
+         http://www.springframework.org/schema/tx/spring-tx.xsd 
+         http://www.springframework.org/schema/task   
+    	 http://www.springframework.org/schema/task/spring-task-3.0.xsd
+         http://www.springframework.org/schema/aop
+         http://www.springframework.org/schema/aop/spring-aop.xsd
+         http://cxf.apache.org/jaxws 
+         http://cxf.apache.org/schemas/jaxws.xsd" 
+	default-autowire="byName">
+	
+	<!-- <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>message</value>
+			</list>
+		</property>
+	</bean> -->
+
+	<bean class="com.flb.base.spring.SpringContext" />
+	
+	<context:property-placeholder location="classpath:datasource.properties" />
+
+ 	<context:component-scan base-package="com.flb">
+		<context:exclude-filter expression="org.springframework.stereotype.Controller" type="annotation"/> 
+	</context:component-scan>
+	<context:component-scan base-package="com.flb.atptechnic" />
+	
+	<!-- <bean class="com.banksteel.process.web.common.custom.CustomHandlerExceptionResolver">
+		<property name="exceptionMappings">
+			<props>
+				manager exception
+				<prop key="com.banksteel.eac.authentication.AuthenticationException">/process/manager/exception</prop>
+				<prop key="com.banksteel.eac.web.exception.BankSteelWebAppException">/process/manager/exception</prop>
+				<prop key="cn.mysteel.core.ServiceException">/process/manager/exception</prop>
+				member exception
+				<prop key="java.lang.RuntimeException">/member/process/exception</prop>
+				<prop key="com.banksteel.process.web.member.exception.MemberProcessException">/member/process/exception</prop>
+				www exception
+				<prop key="com.banksteel.process.web.www.exception.WwwProcessException">/member/process/exception</prop>
+			</props>
+		</property>
+	</bean> -->
+
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+		<property name="driverClassName" value="${dataSource.driverClassName}" />
+		<property name="url" value="${dataSource.url}" />
+		<property name="username" value="${dataSource.username}" />
+		<property name="password" value="${dataSource.password}" />
+		<property name="initialSize" value="${dataSource.initialSize}" />
+		<property name="maxActive" value="${dataSource.maxActive}" />
+		<property name="maxWait" value="${dataSource.maxWait}" />
+		<property name="minIdle" value="${dataSource.minIdle}" />
+		<property name="timeBetweenEvictionRunsMillis" value="${dataSource.timeBetweenEvictionRunsMillis}" />
+		<property name="testOnBorrow" value="${dataSource.testOnBorrow}" />
+		<property name="testWhileIdle" value="${dataSource.testWhileIdle}" />
+		<property name="validationQuery" value="${dataSource.validationQuery}" />
+		<property name="filters" value="stat" /> 
+	</bean>
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="configLocation" value="classpath:mybatis/mybatis-config.xml" />
+		<property name="mapperLocations" value="classpath*:mybatis/mapper/**/*_mapper.xml" />
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer" autowire="no">
+		<property name="basePackage" value="com.flb.atptechnic.dao" />
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+	</bean>
+	
+	<tx:annotation-driven/>
+	
+	<bean id="transactionManager"  
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">  
+		<property name="dataSource" ref="dataSource" />  
+	</bean>
+	
+</beans>
